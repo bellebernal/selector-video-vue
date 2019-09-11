@@ -17,6 +17,7 @@
 
     <v-content>
       <Selector/>
+      <!-- <Player/> -->
       <!-- <Selector v-on:select-video="handleVideoChange"/> -->
       <!-- <Player 
       v-if="handleVideoChange()"
@@ -29,21 +30,21 @@
 <script>
 import Vue from 'vue';
 import Selector from './components/Selector.vue';
-import Player from './components/Player.vue';
+// import Player from './components/Player.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
     Selector,
-    Player
+    // Player
   },
   data: () => ({
     current: null
   }),
   methods: {
-    // handleVideoChange(video){
-    //   this.current = video;
-    // }
+    handleVideoChange(video){
+      this.current = video;
+    }
   }
 });
 </script>

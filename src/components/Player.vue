@@ -7,88 +7,67 @@
                     <v-icon small>far fa-window-close</v-icon>
                 </router-link>
             </div>
-            <!-- put indside video tag: v-if="selectors.id = (videos.id + 'Player')" -->
             <video
-            @activeVideo="files = $event"
             controls 
             width="640"
             height="360"
             frameborder="0" 
             allow="autoplay;encrypted-media" 
-            allowfullscreen
-            >
-            **** CHECK OUT data-src, watch object (e.g. watch.name) ****
-
-            <source 
-            :value="files"
-            v-for="file in files" :key=file.id
-            :src="file.url" 
-            :type="file.type"
-            />
+            allowfullscreen>
+                <source 
+                @changeVideo="updateVideo($event)"
+                v-for="file in playerFiles" :key="file.id"
+                :src="file.url" 
+                :type="file.type"
+                />
+            </video>
             <!-- 
-            src="http://test-cdn.selectablemedia.com/test/a/sintel/assets/video/sintel_trailer-1080p.mp4"
             :src="videos[0].files[0].url"
             type="videos[0].files[0].type"
             -->
-                <!-- v-for="video in videos" :key="video.id" -->
-                <!-- <source 
-                v-for="file in videos.files" :key="file.id"
-                :src="file.url"
-                :type="file.type"/> -->
-            </video>
-            <!-- <player-video/> -->
-            <!-- <playerovdep :videos="activeVideo"/> -->
+            <!-- the below div is just to check if "files" subarray is properly being grabbed -->
+            <div class="video-data"> 
+                {{ playerFiles }}
+            </div>
         </div>
         <router-view></router-view>
-        <!-- <ul>
-            <v-list-item v-for="file in videos.files" :key="file.id">
-            src = {{file.url}}
-            type = {{file.type}}
-            </v-list-item>
-        </ul> -->
+        
+        <!-- <div class="video-data"
+            @changeVideo="updateVideo($event)"
+            v-for="file in videoFiles" :key="file.id"
+            > src: {{file.url}}, type: {{file.type}}
+        </div> -->
     </div>
 </template>
 
 <script>
-import Vue from 'vue'
+import axios from 'axios';
 
-// const videoPlayer = {
-//     props: ['videos'],
-//     template: `
-//         <video controls 
-//             width="640"
-//             height="360"
-//             frameborder="0" 
-//             allow="autoplay;encrypted-media" 
-//             allowfullscreen>
-//             // <source 
-//             // v-for="file in videos.files" :key="video.id"
-//             // :src="video.files.url"
-//             // :type="video.files.type"/>
-//         </video>
-        
-//     `
-// }
-
-export default Vue.extend({
+export default {
     name: 'Player',
-    props: ['files'],
+    // props: ['files'],
     data() {
         return {
-            files: [],
-            activeVideo: null,
+            videosJson: [],
+            playerFiles: [],
             methods: {
-                changeVideo(event) {
-                    this.files = event.target.dataset['files'];
-                    // this.files = event.target.setAttriibute('files');
-                    this.$emit('activeVideo', this.files);
+                updateVideo(updatedVideo) {
+                    this.playerFiles = updatedVideo;
                 }
 
             }
         }
     },
+    mounted() {
+      axios
+        .get('./videos.json')
+        .then((response) => {
+          this.videosJson = response.data;  // <-- this correctly grabs the full videos.json data
+          this.playerFiles = this.videosJson.files; //<-- trying to target the sub-array in json data called "files"
+        });
+    },
     
-})
+}
 </script>
 
 <style>
@@ -112,6 +91,13 @@ export default Vue.extend({
 
 .v-icon.fa-window-close {
     color: white;
+}
+
+.video-data {
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    flex-direction: flelx-end;
 }
 
 </style>
