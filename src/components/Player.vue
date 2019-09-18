@@ -58,15 +58,14 @@ export default {
             }
         }
     },
-    mounted() {
-      axios
-        .get('./videos.json')
-        .then((response) => {
-          this.videosJson = response.data;  // <-- this correctly grabs the full videos.json data
-          this.playerFiles = this.videosJson.files; //<-- trying to target the sub-array in json data called "files"
-        });
-    },
-    
+    // mounted() {
+    //   axios
+    //     .get('./videos.json')
+    //     .then((response) => {
+    //       this.videosJson = response.data;  // <-- this correctly grabs the full videos.json data
+    //       this.playerFiles = this.videosJson.files; //<-- trying to target the sub-array in json data called "files"
+    //     });
+    // },
 }
 </script>
 

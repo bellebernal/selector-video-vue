@@ -2,7 +2,7 @@
   <v-layout row wrap id="layout_row">
     <v-flex xs8 sm4 md3 lg3 xl3  v-for="video in videos" :key="video.id">
       <!-- <router-link to="/player"> -->
-      <v-card href class="ma-3" elevation="15">
+      <v-card class="ma-3" elevation="15" @change-video="handleVideoChange">
         <v-layout column fill-height class="text-left">
           <v-img
             class="orange--text"
@@ -15,12 +15,30 @@
               <div>{{ video.description }}</div>
               <p/>
               <div>Duration: {{ video.info }}</div>
-              <!-- <div>Player Files: {{ video.files }}</div>  // to see if video.files correctly grabs the files subarray - it does! --> 
+              <p/>
+              <!-- // to see if video.files correctly grabs the files subarray - it does!
+                   // ...this correctly assigns the array of player files to each card-->
+              <!-- <div v-for="file in video.files" :key="file.id">
+                <p/>
+                codecs: {{ file.codecs }}
+                type: {{ file.type }}
+                url: {{ file.url }}
+              </div> -->
+              <div v-for="file in video.files" 
+                :key="file.id"
+                :codecs="file.codecs"
+                :type="file.type"
+                :url="file.url">
+              </div>
             </span>
           </v-card-text>
           <v-card-actions>
-            <router-link to="/player" @click="changeVideo(video.files)">
-              <v-btn class="orange gray--text" >
+            <router-link to="/player"
+              :codecs="video.files.codecs"
+              :type="video.files.type"
+              :url="video.files.url"
+              >
+              <v-btn class="orange gray--text" @click="addToPlayer(video)">
                 <v-icon small>fas fa-play</v-icon>
                 <span>play video</span>
               </v-btn>
@@ -43,9 +61,9 @@ export default {
   // props:["videos"],
   data() {
     return {
-      selectedVideo: 0,
       videos: [],
-      playerFiles: []
+      videoFiles: [],
+      currentVideo: {}
     };
   },
   mounted() {
@@ -53,13 +71,27 @@ export default {
         .get('./videos.json')
         .then((response) => {
           this.videos = response.data;
+          // console.log(this.videos);
+        })
+        .then(() => {
+          // console.log(this.videos)
+          this.videos.forEach((video) => {
+            this.videoFiles.push(video.files);
+          });
+          // console.log(this.videoFiles);  
         });
     },
   methods: {
-    changeVideo(files){
-      // this.playerFiles = event.target.dataset['files'];
-      // console.log(this.playerFiles);
-      this.$emit('changeVideo', files);
+    addToPlayer(video) {
+      // console.log(this.videoFiles);
+      // *todo* need logic here to grab the array of files obects for the selected video item
+      // *... selected video item === user clicks on play button on video card
+      // video below is the array of the 4 file objects
+      this.$emit('change-video', video);
+    },
+    handleVideoChange(files) {
+      this.currentVideo.push(files);
+      // console.log(this.currentVideo);
     }
   }
 };

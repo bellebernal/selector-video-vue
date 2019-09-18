@@ -16,9 +16,8 @@
     </v-app-bar>
 
     <v-content>
-      <Selector/>
+      <Selector :video="video"/>
       <!-- <Player/> -->
-      <!-- <Selector v-on:select-video="handleVideoChange"/> -->
       <!-- <Player 
       v-if="handleVideoChange()"
       :src="current"
@@ -34,18 +33,20 @@ import Selector from './components/Selector.vue';
 
 export default Vue.extend({
   name: 'App',
+  props: ['video'],
   components: {
     Selector,
     // Player
-  },
-  data: () => ({
-    current: null
-  }),
-  methods: {
-    handleVideoChange(video){
-      this.current = video;
-    }
   }
+//   data: () => ({
+//     currentVideo: null
+//   }),
+//   methods: {
+//     handleVideoChange(files){
+//       this.currentVideo.push(files);
+//       console.log(this.currentVideo);
+//     }
+//   }
 });
 </script>
 

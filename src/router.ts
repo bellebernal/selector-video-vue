@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from './views/Home.vue'
 import Player from './components/Player.vue'
 import Selector from './components/Selector.vue'
 
