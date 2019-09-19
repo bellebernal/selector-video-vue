@@ -14,58 +14,29 @@
             frameborder="0" 
             allow="autoplay;encrypted-media" 
             allowfullscreen>
-                <source 
-                @changeVideo="updateVideo($event)"
-                v-for="file in playerFiles" :key="file.id"
-                :src="file.url" 
-                :type="file.type"
+                <source
+                v-for="act in active" :key="act.id"
+                :src="act.url" 
+                :type="act.type"
                 />
             </video>
             <!-- 
             :src="videos[0].files[0].url"
             type="videos[0].files[0].type"
             -->
-            <!-- the below div is just to check if "files" subarray is properly being grabbed -->
-            <div class="video-data"> 
-                {{ playerFiles }}
-            </div>
         </div>
         <router-view></router-view>
-        
-        <!-- <div class="video-data"
-            @changeVideo="updateVideo($event)"
-            v-for="file in videoFiles" :key="file.id"
-            > src: {{file.url}}, type: {{file.type}}
-        </div> -->
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
     name: 'Player',
-    // props: ['files'],
+    props: ['active'],
     data() {
-        return {
-            videosJson: [],
-            playerFiles: [],
-            methods: {
-                updateVideo(updatedVideo) {
-                    this.playerFiles = updatedVideo;
-                }
-
-            }
-        }
-    },
-    // mounted() {
-    //   axios
-    //     .get('./videos.json')
-    //     .then((response) => {
-    //       this.videosJson = response.data;  // <-- this correctly grabs the full videos.json data
-    //       this.playerFiles = this.videosJson.files; //<-- trying to target the sub-array in json data called "files"
-    //     });
-    // },
+        return {}
+    }
 }
 </script>
 
