@@ -1,11 +1,9 @@
 <template>
-    <div class="video-player">
+    <div class="video-player" id="player">
         <!-- Player Here Temporarily -->
         <div class="player-container">
-            <div class="close-button">
-                <router-link to="/">
-                    <v-icon small>far fa-window-close</v-icon>
-                </router-link>
+            <div class="close-button" id="close">
+                <v-icon small @click="close()">far fa-window-close</v-icon>
             </div>
             <video
             controls 
@@ -15,17 +13,12 @@
             allow="autoplay;encrypted-media" 
             allowfullscreen>
                 <source
-                v-for="act in active" :key="act.id"
-                :src="act.url" 
-                :type="act.type"
+                    v-for="act in active" :key="act.id"
+                    :src="act.url" 
+                    :type="'video/' + act.type + ';codecs=' + act.codecs"
                 />
             </video>
-            <!-- 
-            :src="videos[0].files[0].url"
-            type="videos[0].files[0].type"
-            -->
         </div>
-        <router-view></router-view>
     </div>
 </template>
 
@@ -36,6 +29,15 @@ export default {
     props: ['active'],
     data() {
         return {}
+    },
+    methods: {
+        close() {
+            document.getElementById('close').addEventListener('click',
+                function() {
+                    document.getElementById('player').style.display="none";
+                }
+            );
+        }
     }
 }
 </script>

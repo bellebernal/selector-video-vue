@@ -15,58 +15,88 @@
               <div>{{ video.description }}</div>
               <p/>
               <div>Duration: {{ video.info }}</div>
-              <!-- <div>src: {{ video.files[0].url[0] }}</div> -->
             </span>
           </v-card-text>
           <v-card-actions>
-            <router-link to="/player" 
-              >
-              <!-- > :active="active"
-              v-for="file in video.files"
-              :key="file.id"
-              :codecs="file.codecs"
-              :type="file.type"
-              :src="file.url" -->
-              <v-btn 
+              <v-btn
                 class="orange gray--text"
                 @click="addToPlayer(video)"
-                :active="active">
+                >
                 <v-icon small>fas fa-play</v-icon>
-                <span>play video</span>
+                <span id="play">play video</span>
               </v-btn>
-            </router-link>
           </v-card-actions>
         </v-layout>
       </v-card>
     </v-flex>
     <router-view></router-view>
+    <Player v-if="!display" :active="active" :key="componentKey"/>
+    <div v-else>
+      <Player v-if="doDisplay" :key="componentKey" :active="active"/>
+    </div>
   </v-layout>
 </template>
 
 
 <script>
+import Player from './Player.vue'
 
 export default {
   name: 'Selector',
+  components: { Player },
   props:['videos'],
   data() {
     return {
-      active: []
+      active: [],
+      componentKey: 0
     };
+  },
+  computed: {
+    display() {
+      return this.active.length === 0; // if there is no data in active[], then hide the Player component
+    },
+    doDisplay() {
+      if (this.active.length > 0) {
+      document.getElementById('play').addEventListener('click',
+          function() {
+              document.getElementById('player').style.display="flex";
+          });
+      }
+    }
   },
   methods: {
     addToPlayer(video) {
-      this.active = [];  // resets active array set to empty the array
-      video = video.files;
-      this.active.push(video);
-      console.log(this.active);
-      this.$emit('update-video', video);
+      this.componentKey += 1;
+      this.active = [];  // resets active array to empty
+      this.active = video.files;
+      this.$emit('update-video', this.active);
+      if (this.active.length > 0) {
+        document.getElementById('player').style.display="flex";
+        // this is returning TypeError: Cannot read property 'style' of null
+        // *TODO*
+      } else { return alert('Error: Could not close player'); }
     }
   }
 };
 </script>
 
 <style>
-
+  .video-player {
+    box-sizing: border-box;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.5);
+}
 
 </style>
