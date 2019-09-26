@@ -1,5 +1,5 @@
 <template>
-    <div class="video-player" id="player">
+    <div class="video-player" id="player" :key="componentKey">
         <!-- Player Here Temporarily -->
         <div class="player-container">
             <div class="close-button" id="close">
@@ -27,10 +27,13 @@ export default {
     name: 'Player',
     props: ['active'],
     data() {
-        return {}
+        return {
+            componentKey: 0
+        }
     },
     methods: {
         close() {
+            this.componentKey += 1;
             document.getElementById('close').addEventListener('click',
                 function() {
                     document.getElementById('player').style.display="none";
