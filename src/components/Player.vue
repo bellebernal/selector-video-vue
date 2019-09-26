@@ -6,16 +6,15 @@
                 <v-icon small @click="close()">far fa-window-close</v-icon>
             </div>
             <video
-            controls 
-            width="640"
-            height="360"
-            frameborder="0" 
+            controls
+            frameborder="5" 
             allow="autoplay;encrypted-media" 
             allowfullscreen>
                 <source
                     v-for="act in active" :key="act.id"
                     :src="act.url" 
                     :type="'video/' + act.type + ';codecs=' + act.codecs"
+                    media="all and (max-width:311px)"
                 />
             </video>
         </div>
@@ -43,6 +42,11 @@ export default {
 </script>
 
 <style>
+.player-container { 
+    width: 860px;
+    height: auto;
+}
+
 .video-player {
     box-sizing: border-box;
     background-size: cover;
@@ -65,11 +69,45 @@ export default {
     color: white;
 }
 
-.video-data {
-    border: 2px solid red;
+video {
     display: flex;
     align-items: center;
-    flex-direction: flelx-end;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (orientation: portrait) and (min-width: 311px) and (max-width: 768px) {
+    .player-container { 
+        width: 100%;
+        height: auto;
+    }
+
+    .video-player {
+        box-sizing: border-box;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    video {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+    }
 }
 
 </style>

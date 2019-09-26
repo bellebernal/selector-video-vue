@@ -29,10 +29,9 @@
         </v-layout>
       </v-card>
     </v-flex>
-    <router-view></router-view>
     <Player v-if="!display" :active="active" :key="componentKey"/>
     <div v-else>
-      <Player v-if="doDisplay" :key="componentKey" :active="active"/>
+      <Player v-if="doDisplay" :active="active" :key="componentKey"/>
     </div>
   </v-layout>
 </template>
@@ -68,13 +67,8 @@ export default {
     addToPlayer(video) {
       this.componentKey += 1;
       this.active = [];  // resets active array to empty
-      this.active = video.files;
+      this.active = video.files; // then, assigns the current selected video's files
       this.$emit('update-video', this.active);
-      if (this.active.length > 0) {
-        document.getElementById('player').style.display="flex";
-        // this is returning TypeError: Cannot read property 'style' of null
-        // *TODO*
-      } else { return alert('Error: Could not close player'); }
     }
   }
 };
