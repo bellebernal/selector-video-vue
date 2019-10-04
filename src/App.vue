@@ -76,20 +76,11 @@ export default Vue.extend({
   max-height: 200; 
 }
 
-.v-icon:hover {
-  color: red;
-}
-
 .v-card:hover {
+  border: 2px solid rgba(0,153,224,0.9);
   background:  rgba(0,153,224,0.9);
   cursor: default;
 }
-
-.v-card:hover #title {
-    border: 2px solid rgba(0,153,224,0.9);
-    /* color: rgba(0,153,224,0.9); */
-}
-
 .v-btn span{
   text-decoration: none;
 }
