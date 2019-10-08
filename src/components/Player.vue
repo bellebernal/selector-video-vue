@@ -1,6 +1,5 @@
 <template>
     <div class="video-player" id="player" :key="componentKey">
-        <!-- Player Here Temporarily -->
         <div class="player-container">
             <div class="close-button" id="close">
                 <v-icon small @click="close()">far fa-window-close</v-icon>
@@ -14,7 +13,6 @@
                     v-for="act in active" :key="act.id"
                     :src="act.url" 
                     :type="'video/' + act.type + ';codecs=' + act.codecs"
-                    media="all and (max-width:311px)"
                 />
             </video>
         </div>

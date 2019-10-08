@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap id="layout_row">
-    <v-flex xs8 sm4 md3 lg3 xl3  v-for="video in videos" :key="video.id">
+    <v-flex xs8 sm4 md3 lg3 xl3  v-for="video in selectorData" :key="video.id">
       <v-card class="ma-3" elevation="15">
         <v-layout column fill-height class="text-left">
           <v-img
@@ -29,9 +29,9 @@
         </v-layout>
       </v-card>
     </v-flex>
-    <Player v-if="!display" :active="active" :key="componentKey"/>
+    <Player v-if="!hide" :active="active" :key="componentKey"/>
     <div v-else>
-      <Player v-if="doDisplay" :active="active" :key="componentKey"/>
+      <Player v-if="display" :active="active" :key="componentKey"/>
     </div>
   </v-layout>
 </template>
@@ -43,18 +43,18 @@ import Player from './Player.vue'
 export default {
   name: 'Selector',
   components: { Player },
-  props:['videos'],
+  props:['selectorData'],
   data() {
     return {
       active: [],
-      componentKey: 0
+      componentKey: 0 // force reload component
     };
   },
   computed: {
-    display() {
+    hide() {
       return this.active.length === 0; // if there is no data in active[], then hide the Player component
     },
-    doDisplay() {
+    display() {
       if (this.active.length > 0) {
       document.getElementById('play').addEventListener('click',
           function() {
@@ -65,8 +65,8 @@ export default {
   },
   methods: {
     addToPlayer(video) {
-      this.componentKey += 1;
-      this.active = [];  // resets active array to empty
+      this.componentKey += 1; 
+      this.active = [];  // resets active array state to empty
       this.active = video.files; // then, assigns the current selected video's files
       this.$emit('update-video', this.active);
     }

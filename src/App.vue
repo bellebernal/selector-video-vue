@@ -15,7 +15,7 @@
         ></v-img>
     </v-app-bar>
     <v-content>
-          <Selector :videos="videos"/>
+          <Selector :selectorData="selectorData"/>
     </v-content>
   </v-app>
 </template>
@@ -24,6 +24,7 @@
 import Vue from 'vue';
 import Selector from './components/Selector.vue';
 import axios from 'axios';
+import map  from 'rxjs/operators';
 
 export default Vue.extend({
   name: 'App',
@@ -33,21 +34,47 @@ export default Vue.extend({
   data() {
     return {
       videos: [],
-      videoFiles: []
+      selectorData: [],
+      videoData: [],
+      playerData: []
     };
   },
   mounted() {
-      axios
-        .get('./videos.json')
-        .then((response) => {
-          this.videos = response.data;
-        })
-        .then(() => {
-          this.videos.forEach((video) => {
-            this.videoFiles.push(video.files);
+    axios
+      .get('./response.json')
+      .then((response) => {  // then we take the response, search for config data to create the video cards, and add the views object to a separate videoData array 
+        this.videos = response.data.screens;
+        this.selectorData = this.videos[0].config.views;
+        for (let i = 1; i < this.videos.length; i++) {
+          this.videoData.push(this.videos[i].config.views);
+        }
+      })
+      .then(() => {  //  then search the videoData to find the actual player files we need and put them in a separate array
+        let playFiles = this.videoData;
+        for (let key in playFiles) {
+          if (playFiles.hasOwnProperty(key) && !isNaN(parseInt(key,10))) {
+            let value = playFiles[key];
+            value.filter(subarray => {
+              let id = subarray.id;
+              if (id.includes('Player')) {
+                this.playerData.push(subarray);
+              }
+            });
+          }
+        }
+      })
+      .then(() => {  // this block combines 2 arrays from above by creating a new files prop to each selector and assiging the corresponding play files
+        let playables = this.playerData;
+        this.selectorData.forEach((selector) => {
+          selector['files']; 
+          playables.forEach((play) => { 
+            if (play.id.includes(selector.id)) {
+              selector['files']= play.files;
+            }
           });
         });
-    }
+      });
+  }
 });
 </script>
 
@@ -76,18 +103,10 @@ export default Vue.extend({
   max-height: 200; 
 }
 
-.v-icon:hover {
-  color: red;
-}
-
 .v-card:hover {
   background:  rgba(0,153,224,0.9);
+  border: 2px solid rgba(0,153,224,0.9);
   cursor: default;
-}
-
-.v-card:hover #title {
-    border: 2px solid rgba(0,153,224,0.9);
-    /* color: rgba(0,153,224,0.9); */
 }
 
 .v-btn span{
@@ -120,13 +139,6 @@ export default Vue.extend({
 
 .v-icon.fa-window-close {
     color: white;
-}
-
-.video-data {
-    border: 2px solid red;
-    display: flex;
-    align-items: center;
-    flex-direction: flelx-end;
 }
 
 </style>
