@@ -60,7 +60,7 @@ export default {
           function() {
               document.getElementById('player').style.display="flex";
           });
-      }
+      } else return null
     }
   },
   methods: {
