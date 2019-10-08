@@ -41,8 +41,6 @@ export default Vue.extend({
         .get('./videos.json')
         .then((response) => {
           this.videos = response.data;
-        })
-        .then(() => {
           this.videos.forEach((video) => {
             this.videoFiles.push(video.files);
           });
