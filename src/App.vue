@@ -40,6 +40,7 @@ export default Vue.extend({
     };
   },
   mounted() {
+<<<<<<< HEAD
     axios
       .get('./response.json')
       .then((response) => {  // then we take the response, search for config data to create the video cards, and add the views object to a separate videoData array 
@@ -71,6 +72,14 @@ export default Vue.extend({
             if (play.id.includes(selector.id)) {
               selector['files']= play.files;
             }
+=======
+      axios
+        .get('./videos.json')
+        .then((response) => {
+          this.videos = response.data;
+          this.videos.forEach((video) => {
+            this.videoFiles.push(video.files);
+>>>>>>> 7dc6849f86735ea131cf1261589179724cc2abc8
           });
         });
       });
@@ -104,11 +113,15 @@ export default Vue.extend({
 }
 
 .v-card:hover {
+  border: 2px solid rgba(0,153,224,0.9);
   background:  rgba(0,153,224,0.9);
   border: 2px solid rgba(0,153,224,0.9);
   cursor: default;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7dc6849f86735ea131cf1261589179724cc2abc8
 .v-btn span{
   text-decoration: none;
 }
