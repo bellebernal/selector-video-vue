@@ -8,9 +8,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-img
-          src="https://www.meredith.com/sites/all/themes/meredith/logo.png"
+          src="./assets/film_logo.png"
           contain
-          height="30px"
+          height="130px"
           width="30px"
         ></v-img>
     </v-app-bar>
@@ -78,6 +78,11 @@ export default Vue.extend({
 </script>
 
 <style>
+  .v-responsive__content {
+    display: flex;
+    justify-content: center;
+  }
+
   .v-toolbar span {
     color:rgba(0,153,224,0.9);
   }
@@ -88,56 +93,55 @@ export default Vue.extend({
 
   a {
   text-decoration: none;
-}
-.row {
-  justify-content: center;
-  flex-wrap: wrap;
-}
+  }
 
-.v-card {
-  text-decoration: none;
-  min-height: 100;
-  min-width: 100;
-  max-width: 200;
-  max-height: 200; 
-}
+  #layout_row {
+    padding: 20px;
+  }
 
-.v-card:hover {
-  border: 2px solid rgba(0,153,224,0.9);
-  background:  rgba(0,153,224,0.9);
-  border: 2px solid rgba(0,153,224,0.9);
-  cursor: default;
-}
-.v-btn span{
-  text-decoration: none;
-}
-
-@media screen and (min-width: 300px) and (max-width: 960px){
-    #layout_row {
-      padding: 20px;
-    }
-}
-
-.video-player {
-    box-sizing: border-box;
-    background-size: cover;
-    display: flex;
-    align-items: center;
+  .row {
     justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    background-color: rgba(0,0,0,0.5);
-}
+    flex-wrap: wrap;
+  }
 
-.v-icon.fa-window-close {
-    color: white;
-}
+  .v-card {
+    text-decoration: none;
+    min-height: 100;
+    min-width: 100;
+    max-width: 200;
+    max-height: 200; 
+  }
+
+  .v-card:hover {
+    border: 2px solid rgba(0,153,224,0.9);
+    background:  rgba(0,153,224,0.9);
+    border: 2px solid rgba(0,153,224,0.9);
+    cursor: default;
+  }
+  .v-btn span{
+    text-decoration: none;
+  }
+
+  .video-player {
+      box-sizing: border-box;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background-color: rgba(0,0,0,0.5);
+  }
+
+  .v-icon.fa-window-close {
+      color: white;
+  }
 
 </style>

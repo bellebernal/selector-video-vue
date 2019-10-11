@@ -25,6 +25,48 @@
                     "title": "WALL-E",
                     "description": "Small video. Youtube, custom controls. Left social. Video + carousel.",
                     "info": "02:30"
+                }, {
+                    "id": "sintel",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/sintel/assets/img/thumb_sintel.png",
+                    "title": "Sintel",
+                    "description": "Small video. HTML5, native controls, start poster. Bottom, right social. Video + grid",
+                    "info": "00:51"
+                }, {
+                    "id": "bbb",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/bbb/assets/img/thumb_bbb.png",
+                    "title": "Big Buck Bunny",
+                    "description": "Large video. HTML5, custom controls, social hover. Video + replay",
+                    "info": "00:33"
+                }, {
+                    "id": "walle",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/walle/assets/img/thumb_walle.png",
+                    "title": "WALL-E",
+                    "description": "Small video. Youtube, custom controls. Left social. Video + carousel.",
+                    "info": "02:30"
+                }, {
+                    "id": "sintel",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/sintel/assets/img/thumb_sintel.png",
+                    "title": "Sintel",
+                    "description": "Small video. HTML5, native controls, start poster. Bottom, right social. Video + grid",
+                    "info": "00:51"
+                }, {
+                    "id": "bbb",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/bbb/assets/img/thumb_bbb.png",
+                    "title": "Big Buck Bunny",
+                    "description": "Large video. HTML5, custom controls, social hover. Video + replay",
+                    "info": "00:33"
+                }, {
+                    "id": "walle",
+                    "type": "selectorItem",
+                    "thumbnail": "http://test-cdn.selectablemedia.com/test/a/walle/assets/img/thumb_walle.png",
+                    "title": "WALL-E",
+                    "description": "Small video. Youtube, custom controls. Left social. Video + carousel.",
+                    "info": "02:30"
                 }]
             }
         },

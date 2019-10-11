@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap id="layout_row">
-    <v-flex xs8 sm4 md3 lg3 xl3  v-for="video in selectorData" :key="video.id">
+    <v-flex xs8 sm4 md3 lg3 xl1  v-for="video in selectorData" :key="video.id">
       <v-card class="ma-3" elevation="15">
         <v-layout column fill-height class="text-left">
           <v-img
@@ -31,7 +31,7 @@
     </v-flex>
     <Player v-if="!hide" :active="active" :key="componentKey"/>
     <div v-else>
-      <Player v-if="display" :active="active" :key="componentKey"/>
+      <Player v-show="display" :active="active" :key="componentKey"/>
     </div>
   </v-layout>
 </template>
@@ -60,7 +60,7 @@ export default {
           function() {
               document.getElementById('player').style.display="flex";
           });
-      } else return null
+      }
     }
   },
   methods: {
@@ -73,6 +73,8 @@ export default {
   }
 };
 </script>
+
+ <!-- * test with duplicate player files too * -->
 
 <style>
   .video-player {
