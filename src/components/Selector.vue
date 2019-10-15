@@ -58,7 +58,7 @@ export default {
       if (this.active.length > 0) {
       document.getElementById('play').addEventListener('click',
           function() {
-              document.getElementById('player').style.display="flex";
+              document.getElementById('player').style.display='flex';
           });
       }
     }

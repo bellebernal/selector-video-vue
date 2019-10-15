@@ -1,5 +1,5 @@
 <template>
-    <div class="video-player" id="player">
+    <div class="video-player" id="player" :key="componentKey">
         <div class="player-container">
             <div class="close-button" id="close">
                 <v-icon small @click="close()">far fa-window-close</v-icon>
@@ -26,13 +26,15 @@ export default {
     props: ['active'],
     data() {
         return {
+            componentKey: 0
         }
     },
     methods: {
         close() {
+            this.componentKey += 1;
             document.getElementById('close').addEventListener('click',
-                function() {
-                    document.getElementById('player').style.display="none";
+                () => {
+                    document.getElementById('player').style.display='none';
                 }
             );
         }

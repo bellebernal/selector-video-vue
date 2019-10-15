@@ -44,9 +44,12 @@ export default Vue.extend({
       .then((response) => {  // then we take the response, search for config data to create the video cards, and add the views object to a separate videoData array 
         this.videos = response.data.screens;
         this.selectorData = this.videos[0].config.views;
-        for (let i = 1; i < this.videos.length; i++) {
-          this.videoData.push(this.videos[i].config.views);
-        }
+        this.videos.forEach((video) => {
+          this.videoData.push(video.config.views);
+        })
+        // for (let i = 1; i < this.videos.length; i++) {  // *TODO* simply further at a forEach loop
+        //   this.videoData.push(this.videos[i].config.views);
+        // }
       })
       .then(() => {  //  then search the videoData to find the actual player files we need and put them in a separate array
         let playFiles = this.videoData;
