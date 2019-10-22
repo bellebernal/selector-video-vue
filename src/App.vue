@@ -45,28 +45,36 @@ export default Vue.extend({
         this.videos = response.data.screens;
         this.selectorData = this.videos[0].config.views;
         this.videos.forEach((video) => {
-          this.videoData.push(video.config.views);
+          this.videoData.push(video.config.views)
         })
-        // for (let i = 1; i < this.videos.length; i++) {  // *TODO* simply further at a forEach loop
-        //   this.videoData.push(this.videos[i].config.views);
-        // }
       })
       .then(() => {  //  then search the videoData to find the actual player files we need and put them in a separate array
-        let playFiles = this.videoData;
-        for (let key in playFiles) {
-          if (playFiles.hasOwnProperty(key) && !isNaN(parseInt(key,10))) {
-            let value = playFiles[key];
+        const playFiles = this.videoData;
+        playFiles.forEach((value,index) => {
+          if (playFiles.hasOwnProperty(index) && !isNaN(parseInt(index,10))) {
             value.filter(subarray => {
-              let id = subarray.id;
-              if (id.includes('Player')) {
+              const id = subarray.id;
+              if(id.includes('Player')) {
                 this.playerData.push(subarray);
               }
             });
           }
-        }
+        })
+        // same function as above but uses (outdated) for..in loop:
+        // for (let key in playFiles) {  //  Looping over property names (not indexes!) is what for..in is for!
+        //   if (playFiles.hasOwnProperty(key) && !isNaN(parseInt(key,10))) {
+        //     let value = playFiles[key];
+        //     value.filter(subarray => {  // for each of the element (i.e. subarray) find the id, initialize it and if it has 'Player' in the id then grab that element and it contents
+        //       let id = subarray.id;
+        //       if (id.includes('Player')) {
+        //         this.playerData.push(subarray);
+        //       }
+        //     });
+        //   }
+        // }
       })
       .then(() => {  // this block combines 2 arrays from above by creating a new files prop to each selector and assiging the corresponding play files
-        let playables = this.playerData;
+        const playables = this.playerData;
         this.selectorData.forEach((selector) => {
           selector['files']; 
           playables.forEach((play) => { 
