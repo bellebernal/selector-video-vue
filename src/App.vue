@@ -60,18 +60,6 @@ export default Vue.extend({
             });
           }
         })
-        // same function as above but uses (outdated) for..in loop:
-        // for (let key in playFiles) {  //  Looping over property names (not indexes!) is what for..in is for!
-        //   if (playFiles.hasOwnProperty(key) && !isNaN(parseInt(key,10))) {
-        //     let value = playFiles[key];
-        //     value.filter(subarray => {  // for each of the element (i.e. subarray) find the id, initialize it and if it has 'Player' in the id then grab that element and it contents
-        //       let id = subarray.id;
-        //       if (id.includes('Player')) {
-        //         this.playerData.push(subarray);
-        //       }
-        //     });
-        //   }
-        // }
       })
       .then(() => {  // this block combines 2 arrays from above by creating a new files prop to each selector and assiging the corresponding play files
         const playables = this.playerData;
