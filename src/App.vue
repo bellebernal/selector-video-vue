@@ -24,6 +24,19 @@
 import Vue from 'vue';
 import Selector from './components/Selector.vue';
 import axios from 'axios';
+import * as firebase from 'firebase/app';
+
+const config = {
+    apiKey: "AIzaSyAzhYuONm41KLqw7Bed4-OPax2DkQQsFh0",
+    authDomain: "videos-db.firebaseapp.com",
+    databaseURL: "https://videos-db.firebaseio.com",
+    projectId: "videos-db",
+    storageBucket: "videos-db.appspot.com",
+    messagingSenderId: "119171243284",
+    appId: "1:119171243284:web:60b3210e49e55a2a5ab601"
+};
+
+firebase.initializeApp(config);
 
 export default Vue.extend({
   name: 'App',
@@ -40,9 +53,9 @@ export default Vue.extend({
   },
   mounted() {
     axios
-      .get('./response.json')
+      .get('https://videos-db.firebaseio.com/screens.json')
       .then((response) => {  // then we take the response, search for config data to create the video cards, and add the views object to a separate videoData array 
-        this.videos = response.data.screens;
+        this.videos = response.data;
         this.selectorData = this.videos[0].config.views;
         this.videos.forEach((video) => {
           this.videoData.push(video.config.views)
@@ -83,11 +96,12 @@ export default Vue.extend({
   }
 
   .v-toolbar span {
-    color:rgba(0,153,224,0.9);
+    color: darkcyan;
+    font-size: xx-large;
   }
 
   .v-content {
-    background: lightgray;
+    background: darkgray;
   }
 
   a {
@@ -111,32 +125,31 @@ export default Vue.extend({
     max-height: 200; 
   }
 
-  .v-card:hover {
-    border: 2px solid rgba(0,153,224,0.9);
-    background:  rgba(0,153,224,0.9);
-    border: 2px solid rgba(0,153,224,0.9);
-    cursor: default;
-  }
-  .v-btn span{
-    text-decoration: none;
+  .card-title {
+    color: orange;
+    font-weight: bolder;
   }
 
-  .video-player {
-      box-sizing: border-box;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 10;
-      background-color: rgba(0,0,0,0.5);
+  .v-card:hover {
+    border: 2px solid lightsalmon;
+    background:  lightsalmon;
+    border: 2px solid lightsalmon;
+    cursor: default;
+  }
+
+  .v-card:hover .card-title {
+    color: darkcyan;
+    font-weight: bolder;
+  }
+
+  button {
+    color: black;
+  }
+
+  .v-btn span{
+    text-decoration: none;
+    color: darkcyan;
+    /* background: black; */
   }
 
   .v-icon.fa-window-close {

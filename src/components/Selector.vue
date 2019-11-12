@@ -8,8 +8,8 @@
             class="orange--text"
             fill-height
             :src="video.thumbnail">
-            <v-card-title id="title" class="align-end fill-height font-weight-bold">{{ video.title }}</v-card-title>
           </v-img>
+          <v-card-title class="card-title">{{ video.title }}</v-card-title>
           <v-card-text>
             <span class="text--primary">
               <div>{{ video.description }}</div>
@@ -23,7 +23,7 @@
                 @click="addToPlayer(video)"
                 >
                 <v-icon small>fas fa-play</v-icon>
-                <span id="play">play video</span>
+                <span id="play">play</span>
               </v-btn>
           </v-card-actions>
         </v-layout>
@@ -77,6 +77,7 @@ export default {
  <!-- * test with duplicate player files too * -->
 
 <style>
+
   .video-player {
     box-sizing: border-box;
     background-size: cover;
