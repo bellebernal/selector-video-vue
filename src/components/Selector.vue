@@ -1,6 +1,9 @@
 <template>
   <v-layout row wrap id="layout_row">
-    <v-flex xs8 sm4 md3 lg3 xl1  v-for="video in selectorData" :key="video.id">
+    <v-flex 
+      xs8 sm4 md3 lg3 xl1
+      v-for="video in selectorData"
+      :key="video.id">
       <v-card class="ma-3" elevation="15">
         <v-layout column fill-height class="text-left">
           <v-img
@@ -19,7 +22,7 @@
           </v-card-text>
           <v-card-actions>
               <v-btn
-                class="orange gray--text"
+                class="orange"
                 @click="addToPlayer(video)"
                 >
                 <v-icon small>fas fa-play</v-icon>

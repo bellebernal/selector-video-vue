@@ -7,21 +7,22 @@
         <span class="font-weight-light">SELECTOR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-img
-          src="./assets/film_logo.png"
-          contain
-          height="130px"
-          width="30px"
-        ></v-img>
+      <v-img src="./assets/video-logo.svg"></v-img>
+      <v-img src="./assets/library-logo.svg"></v-img>
     </v-app-bar>
     <v-content>
-          <Selector :selectorData="selectorData"/>
+        <Search :search="state.search"
+                @search="handleSearch"
+                :selectorData="selectorData"/>
+        <Selector :selectorData="selectorData"/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Vue from 'vue';
+import { reactive, watch } from '@vue/composition-api';
+import Search from './components/Search.vue';
 import Selector from './components/Selector.vue';
 import axios from 'axios';
 import * as firebase from 'firebase/app';
@@ -41,7 +42,24 @@ firebase.initializeApp(config);
 export default Vue.extend({
   name: 'App',
   components: {
+    Search,
     Selector
+  },
+  setup() {
+    const state = reactive({
+      search: '',
+      videos:[],
+      errorMessage: null
+    });
+    watch(() => {
+      state.videos = this.selectorData;
+    });
+    return {
+      state,
+      handleSearch(input) {
+        state.search = input;
+      }
+    };
   },
   data() {
     return {
@@ -90,6 +108,33 @@ export default Vue.extend({
 </script>
 
 <style>
+  .v-app-bar .v-image {
+    flex: inherit;
+    margin-left: 10px;
+    height: 60px;
+    width: 60px;
+  }
+  
+  .search {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .search input {
+    border: 2px solid darkcyan;
+    width: 50%;
+    margin: 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2em;
+  }
+
+  .search .v-btn{
+    width: 10%;
+    margin: 10px;
+    font-weight: 500;
+  }
+
   .v-responsive__content {
     display: flex;
     justify-content: center;
@@ -102,6 +147,7 @@ export default Vue.extend({
 
   .v-content {
     background: darkgray;
+    width: -webkit-fill-available;
   }
 
   a {
@@ -142,18 +188,19 @@ export default Vue.extend({
     font-weight: bolder;
   }
 
-  button {
-    color: black;
-  }
-
   .v-btn span{
     text-decoration: none;
     color: darkcyan;
-    /* background: black; */
   }
 
   .v-icon.fa-window-close {
       color: white;
   }
 
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+}
 </style>
