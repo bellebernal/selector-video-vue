@@ -1,38 +1,55 @@
 <template>
-    <form class="search">
-        <input 
-            type="text"
-            placeholder="work in progress"
-            :value="videoTitle"
-            @keyup="handleChange"/>
-        <v-btn
-            class="orange"
-            type="submit"
-            @click="handleSubmit"
-            >SEARCH</v-btn>
-    </form>
+    <v-layout>
+        <v-form class="search">
+            <v-col cols="12" sm="8" md="6">
+                <v-text-field 
+                    outline
+                    placeholder="work in progress..."
+                    :searchString="searchString"
+                    @keyup="handleChange"/>
+                </v-col>
+            <v-col>
+                <v-btn
+                    class="orange"
+                    type="submit"
+                    @click="handleSubmit"
+                    >SEARCH</v-btn>
+            </v-col>
+        </v-form>
+        <div class="search-results" v-for="results in selectorData" :key="results.id">
+            <Selector v-show="handleSubmit"/>
+        </div>
+    </v-layout>
 </template>
 
 <script>
-import { ref } from '@vue/composition-api';
+import { Selector } from './Selector.vue';
 
 export default {
     name: 'Search',
-    props: ['search'],
-    setup({search}, {emit}) {
-        const videoTitle = ref(search);  
-        //  ref contains a single prop called value and takes the value of the argument passed into it (i.e. the search prop) --it acts as a reactive wrapper around the originial value
-        //  no need to reference the value property in the template as Vue will unwrap it for us.  So, if we pass in an object it will be highly reactive
+    props: ['search', 'selectorData'],
+    components: { Selector},
+    data() {
         return {
-            videoTitle,
-            handleSubmit(event) {
-                event.preventDefault();
-                emit('search', videoTitle.value);
-            },
-            handleChange(event) {
-                videoTitle.value = event.target.value;
-            }
+            searchString: '',
+            results
+        }
+    },
+    methods: {
+        handleSubmit(event) {
+            event.preventDefault();
+            this.$emit('search', this.searchString);
+            this.searchString = ''; // reset search input
+        },
+        handleChange(event) {
+            this.video.title = this.searchString;
         }
     }
-};
+}
 </script>
+<style>
+    .v-form {
+        align-items: baseline;
+        margin-top: 10px;
+    }
+</style>

@@ -1,20 +1,21 @@
 <template>
   <!-- root -->
   <v-app>
-    <v-app-bar app dark elevation height="100">
+    <v-app-bar app dark elevation>
       <v-toolbar-title class="headline text-uppercase">
         <span>Video</span>
         <span class="font-weight-light">SELECTOR</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <v-img src="./assets/video-logo.svg"></v-img>
       <v-img src="./assets/library-logo.svg"></v-img>
     </v-app-bar>
     <v-content>
-        <Search :search="state.search"
-                @search="handleSearch"
-                :selectorData="selectorData"/>
-        <Selector :selectorData="selectorData"/>
+        <Search :search="search"
+                @search="handleSearch"/>
+        <!-- <Selector v-if="handleSearch" :selectorData="selectorData"/> -->
+        <Selector v-show="!handleSsearch" :selectorData="selectorData"/>
     </v-content>
   </v-app>
 </template>
@@ -45,29 +46,20 @@ export default Vue.extend({
     Search,
     Selector
   },
-  setup() {
-    const state = reactive({
-      search: '',
-      videos:[],
-      errorMessage: null
-    });
-    watch(() => {
-      state.videos = this.selectorData;
-    });
-    return {
-      state,
-      handleSearch(input) {
-        state.search = input;
-      }
-    };
-  },
+  props: ['seatch'],
   data() {
     return {
+      // search,
       videos: [],
       selectorData: [],
       videoData: [],
       playerData: []
     };
+  },
+  methods: {
+    handleSearch(searchItem) {
+        this.search = searchItem;
+      }
   },
   mounted() {
     axios
@@ -107,32 +99,48 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-  .v-app-bar .v-image {
-    flex: inherit;
-    margin-left: 10px;
-    height: 60px;
-    width: 60px;
+<style lang="scss">
+
+  .v-app-bar {
+    display: flex;
+    height: 10%;
+    width: 100%;
+    align-items: center;
+
+    &.v-toolbar {
+        height: 9%;
+        width: 100%;
+    }
+
+    & .v-image {
+      margin-left: 10px;
+      height: 50px;
+      width: 50px;
+    }
+    
   }
   
   .search {
     display: flex;
     flex-direction: row;
     justify-content: center;
-  }
-  .search input {
-    border: 2px solid darkcyan;
     width: 50%;
-    margin: 10px;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1.2em;
-  }
+    margin-left: 30%;
+    
+    & .v-text-field {
+      // border: 2px solid darkcyan;
+      margin: 10px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 1.2em;
+    }
 
-  .search .v-btn{
-    width: 10%;
-    margin: 10px;
-    font-weight: 500;
+    & .v-btn {
+      width: 10%;
+      margin: 0px;
+      font-weight: 500;
+    }
+
   }
 
   .v-responsive__content {
@@ -151,11 +159,12 @@ export default Vue.extend({
   }
 
   a {
-  text-decoration: none;
+    text-decoration: none;
   }
 
   #layout_row {
     padding: 20px;
+    width: 100%;
   }
 
   .row {
@@ -169,23 +178,23 @@ export default Vue.extend({
     min-width: 100;
     max-width: 200;
     max-height: 200; 
-  }
+  
 
-  .card-title {
-    color: orange;
-    font-weight: bolder;
-  }
+    & .card-title {
+      color: orange;
+      font-weight: bolder;
+    }
 
-  .v-card:hover {
-    border: 2px solid lightsalmon;
-    background:  lightsalmon;
-    border: 2px solid lightsalmon;
-    cursor: default;
-  }
+    &:hover {
+      border: 2px solid lightsalmon;
+      background:  lightsalmon;
+      cursor: default;
 
-  .v-card:hover .card-title {
-    color: darkcyan;
-    font-weight: bolder;
+        .card-title {
+          color: darkcyan;
+          font-weight: bolder;
+        }
+    }
   }
 
   .v-btn span{
@@ -202,5 +211,28 @@ export default Vue.extend({
   textarea:focus,
   button:focus {
     outline: none;
-}
+  }
+
+  @media screen and (orientation: portrait) and (min-width: 320px) and (max-width: 589px) {
+    .v-app-bar {
+
+      &.v-toolbar span {
+        font-size: x-large;
+
+        &.v-toolbar__title {
+          font-size: medium;
+        }
+      }
+      
+      &.v-image {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    #layout_row {
+      width: 100%;
+    }
+  }
+
 </style>

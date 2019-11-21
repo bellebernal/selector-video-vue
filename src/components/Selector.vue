@@ -77,8 +77,6 @@ export default {
 };
 </script>
 
- <!-- * test with duplicate player files too * -->
-
 <style>
 
   .video-player {
