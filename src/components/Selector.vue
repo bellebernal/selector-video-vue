@@ -13,7 +13,7 @@
             </span>
           </v-card-text>
           <v-card-actions>
-            <v-btn class="orange" @click="addToPlayer(video)">
+            <v-btn class="card-action" @click="addToPlayer(video)">
               <v-icon small>fas fa-play</v-icon>
               <span id="play">play</span>
             </v-btn>
@@ -21,10 +21,7 @@
         </v-layout>
       </v-card>
     </v-flex>
-    <Player v-if="!hide" :active="active" :key="componentKey"/>
-    <div v-else>
-      <Player v-show="display" :active="active" :key="componentKey"/>
-    </div>
+    <Player v-show="!hide" :active="active" :key="componentKey"/>
   </v-layout>
 </template>
 
@@ -45,18 +42,11 @@ export default {
   computed: {
     hide() {
       return this.active.length === 0; // if there is no data in active[], then hide the Player component
-    },
-    display() {
-      if (this.active.length > 0) {
-        document.getElementById("play").addEventListener("click", function() {
-          document.getElementById("player").style.display = "flex";
-        });
-      }
     }
   },
   methods: {
     addToPlayer(video) {
-      this.componentKey += 1;
+      this.componentKey++;
       this.active = []; // resets active array state to empty
       this.active = video.files; // then, assigns the current selected video's files
       this.$emit("update-video", this.active);

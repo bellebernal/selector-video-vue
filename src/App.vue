@@ -21,8 +21,8 @@
 
 <script>
 import Vue from "vue";
-import { reactive, watch } from "@vue/composition-api";
-import Search from "./components/Search.vue";
+// import { reactive, watch } from "@vue/composition-api";
+// import Search from "./components/Search.vue";
 import Selector from "./components/Selector.vue";
 import axios from "axios";
 import * as firebase from "firebase/app";
@@ -42,10 +42,10 @@ firebase.initializeApp(config);
 export default Vue.extend({
   name: "App",
   components: {
-    Search,
+    // Search,
     Selector
   },
-  props: ["search"],
+  // props: ["search"],
   data() {
     return {
       // search,
@@ -56,13 +56,13 @@ export default Vue.extend({
     };
   },
   methods: {
-    handleSearch(searchItem) {
-      this.search = searchItem;
-    }
+    // handleSearch(searchItem) {
+    //   this.search = searchItem;
+    // }
   },
   mounted() {
     axios
-      .get("https://videos-db.firebaseio.com/screens.json")
+      .get(config.databaseURL + "/screens.json")
       .then(response => {
         // then we take the response, search for config data to create the video cards, and add the views object to a separate videoData array
         this.videos = response.data;
@@ -104,7 +104,7 @@ export default Vue.extend({
 <style lang="scss">
 .v-app-bar {
   display: flex;
-  height: 10%;
+  height: auto;
   width: 100%;
   align-items: center;
 
@@ -120,27 +120,27 @@ export default Vue.extend({
   }
 }
 
-.search {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 50%;
-  margin-left: 30%;
+// .search {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   width: 50%;
+//   margin-left: 30%;
 
-  & .v-text-field {
-    // border: 2px solid darkcyan;
-    margin: 10px;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1.2em;
-  }
+//   & .v-text-field {
+//     // border: 2px solid darkcyan;
+//     margin: 10px;
+//     text-align: center;
+//     font-weight: 500;
+//     font-size: 1.2em;
+//   }
 
-  & .v-btn {
-    width: 10%;
-    margin: 0px;
-    font-weight: 500;
-  }
-}
+//   & .v-btn {
+//     width: 10%;
+//     margin: 0px;
+//     font-weight: 500;
+//   }
+// }
 
 .v-responsive__content {
   display: flex;
@@ -178,9 +178,13 @@ a {
   max-width: 200;
   max-height: 200;
 
-  & .card-title {
+  .card-title {
     color: orange;
     font-weight: bolder;
+  }
+
+  .card-action {
+    background: orange !important;
   }
 
   &:hover {
@@ -191,6 +195,10 @@ a {
     .card-title {
       color: darkcyan;
       font-weight: bolder;
+    }
+
+    .card-action {
+      background: whitesmoke !important; // #e0e0e0
     }
   }
 }
